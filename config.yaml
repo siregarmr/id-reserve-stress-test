@@ -1,0 +1,182 @@
+# config.yaml
+# Indonesia Reserve Stress Test Configuration
+# Last updated: June 2026
+
+baseline:
+  reserves_start_bn: 146.2
+  months_imports_coverage: 5.8
+  months_imports_debt_coverage: 5.6
+  monthly_imports_gs_bn: 25.21
+  monthly_debt_service_proxy_bn: 0.9
+
+thresholds:
+  soft_burnout_months: 6.0
+  hard_burnout_months: 3.0
+  ara_adequate: 1.0
+
+scenarios:
+  Baseline:
+    description: "No shocks – steady state"
+    external:
+      export_shock: 1.0
+      import_shock: 1.0
+      services_shock: 1.0
+      income_shock: 1.0
+    capital_flows:
+      fdi_shock: 1.0
+      portfolio_shock: 1.0
+      other_inv_shock: 1.0
+    debt:
+      rollover_rate: 1.0
+      debt_service_shock: 1.0
+    intervention_rule:
+      max_monthly_bn: 0.0
+      import_cover_threshold: 6.0
+      depreciation_threshold: 2.0
+      alpha: 0.0
+      beta: 0.0
+    exchange_rate:
+      depreciation_pct: 0.0
+    stochastic:
+      external:
+        export_shock:   { type: fixed, value: 1.0 }
+        import_shock:   { type: fixed, value: 1.0 }
+        services_shock: { type: fixed, value: 1.0 }
+        income_shock:   { type: fixed, value: 1.0 }
+      capital_flows:
+        fdi_shock:          { type: fixed, value: 1.0 }
+        portfolio_shock:    { type: fixed, value: 1.0 }
+        other_inv_shock:    { type: fixed, value: 1.0 }
+      debt:
+        rollover_rate:      { type: fixed, value: 1.0 }
+        debt_service_shock: { type: fixed, value: 1.0 }
+      exchange_rate:
+        depreciation_pct:   { type: fixed, value: 0.0 }
+
+  Adverse:
+    description: "Moderate global slowdown, mild capital outflow"
+    external:
+      export_shock: 0.85
+      import_shock: 1.0
+      services_shock: 1.0
+      income_shock: 1.0
+    capital_flows:
+      fdi_shock: 0.8
+      portfolio_shock: 0.0
+      other_inv_shock: 0.5
+    debt:
+      rollover_rate: 0.8
+      debt_service_shock: 1.0
+    intervention_rule:
+      max_monthly_bn: 3.0
+      import_cover_threshold: 6.0
+      depreciation_threshold: 2.0
+      alpha: 0.3
+      beta: 0.5
+    exchange_rate:
+      depreciation_pct: 5.0
+    stochastic:
+      external:
+        export_shock:   { type: normal, mean: 0.85, std: 0.05 }
+        import_shock:   { type: fixed, value: 1.0 }
+        services_shock: { type: fixed, value: 1.0 }
+        income_shock:   { type: fixed, value: 1.0 }
+      capital_flows:
+        fdi_shock:          { type: normal, mean: 0.8, std: 0.1 }
+        portfolio_shock:    { type: normal, mean: 0.0, std: 0.3 }
+        other_inv_shock:    { type: normal, mean: 0.5, std: 0.2 }
+      debt:
+        rollover_rate:      { type: normal, mean: 0.8, std: 0.1 }
+        debt_service_shock: { type: fixed, value: 1.0 }
+      exchange_rate:
+        depreciation_pct:   { type: normal, mean: 5.0, std: 2.0 }
+
+  Severe:
+    description: "2022‑style sudden stop, heavy intervention"
+    external:
+      export_shock: 0.65
+      import_shock: 1.0
+      services_shock: 0.8
+      income_shock: 0.7
+    capital_flows:
+      fdi_shock: 0.5
+      portfolio_shock: -0.5
+      other_inv_shock: -0.2
+    debt:
+      rollover_rate: 0.5
+      debt_service_shock: 1.2
+    intervention_rule:
+      max_monthly_bn: 10.0
+      import_cover_threshold: 6.0
+      depreciation_threshold: 1.0
+      alpha: 0.8
+      beta: 1.5
+    exchange_rate:
+      depreciation_pct: 15.0
+    stochastic:
+      external:
+        export_shock:   { type: normal, mean: 0.65, std: 0.1 }
+        import_shock:   { type: fixed, value: 1.0 }
+        services_shock: { type: normal, mean: 0.8, std: 0.1 }
+        income_shock:   { type: normal, mean: 0.7, std: 0.1 }
+      capital_flows:
+        fdi_shock:          { type: normal, mean: 0.5, std: 0.2 }
+        portfolio_shock:    { type: normal, mean: -0.5, std: 0.4 }
+        other_inv_shock:    { type: normal, mean: -0.2, std: 0.3 }
+      debt:
+        rollover_rate:      { type: normal, mean: 0.5, std: 0.15 }
+        debt_service_shock: { type: normal, mean: 1.2, std: 0.2 }
+      exchange_rate:
+        depreciation_pct:   { type: normal, mean: 15.0, std: 5.0 }
+
+  Extreme:
+    description: "Tail risk – commodity crash, full capital flight"
+    external:
+      export_shock: 0.5
+      import_shock: 1.0
+      services_shock: 0.5
+      income_shock: 0.3
+    capital_flows:
+      fdi_shock: 0.2
+      portfolio_shock: -1.0
+      other_inv_shock: -1.0
+    debt:
+      rollover_rate: 0.2
+      debt_service_shock: 1.5
+    intervention_rule:
+      max_monthly_bn: 15.0
+      import_cover_threshold: 6.0
+      depreciation_threshold: 0.5
+      alpha: 1.0
+      beta: 2.0
+    exchange_rate:
+      depreciation_pct: 30.0
+    stochastic:
+      external:
+        export_shock:   { type: normal, mean: 0.5, std: 0.15 }
+        import_shock:   { type: fixed, value: 1.0 }
+        services_shock: { type: normal, mean: 0.5, std: 0.15 }
+        income_shock:   { type: normal, mean: 0.3, std: 0.15 }
+      capital_flows:
+        fdi_shock:          { type: normal, mean: 0.2, std: 0.2 }
+        portfolio_shock:    { type: normal, mean: -1.0, std: 0.5 }
+        other_inv_shock:    { type: normal, mean: -1.0, std: 0.5 }
+      debt:
+        rollover_rate:      { type: normal, mean: 0.2, std: 0.1 }
+        debt_service_shock: { type: normal, mean: 1.5, std: 0.3 }
+      exchange_rate:
+        depreciation_pct:   { type: normal, mean: 30.0, std: 10.0 }
+
+ara:
+  st_debt_weight: 0.30
+  other_liab_weight: 0.20
+  m2_weight: 0.05
+  exports_annual_weight: 0.05
+  st_debt_bn: 45.0
+  other_liab_bn: 80.0
+  m2_bn: 180.0
+  annual_exports_bn: 280.0
+
+data:
+  cache_dir: "data/processed/"
+  cache_days: 30

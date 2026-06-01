@@ -1,0 +1,42 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+*.manifest
+*.spec
+venv/
+.venv/
+
+# Notebooks
+*.ipynb_checkpoints/
+.ipynb_checkpoints/
+
+# Data caches – ignore generated files, keep .gitkeep and baseline_cache.pkl
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+!data/baseline_cache.pkl
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Test artifacts
+test_download.xls
+debug_*.py
+labels_debug.py
+headers_debug.py
+debug_last.py
+debug_v40.py
