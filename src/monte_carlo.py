@@ -115,6 +115,16 @@ def run_monte_carlo(
         if (i + 1) % 100 == 0:
             print(f"  {scenario_name}: {i+1}/{n_simulations}")
 
+    # ------------------------------------------------------------------
+    # Probability of EVER hitting hard burnout within the 12-month horizon
+    # This directly answers "probability it falls under 3 months cover over
+    # the 12 months period". A path counts as True if hard_burnout is True
+    # in ANY month.
+    # ------------------------------------------------------------------
+    prob_ever_hard_burnout = float(hard_burnout.any(axis=1).mean())
+    prob_ever_soft_burnout = float(soft_burnout.any(axis=1).mean())
+    final_month_hard_burnout_prob = float(hard_burnout[:, -1].mean())
+
     months_idx = list(range(1, months+1))
     paths_df = pd.DataFrame(reserve_paths, columns=[f"month_{m}" for m in months_idx])
     paths_df.index.name = "simulation"
@@ -132,8 +142,11 @@ def run_monte_carlo(
             "hard_burnout_prob": hard_burnout.mean(axis=0),
             "ara_adequate_prob": ara_adequate.mean(axis=0),
         }).set_index("month"),
+        # --- NEW: ever-hit probabilities within the full horizon ---
+        "prob_ever_hard_burnout": prob_ever_hard_burnout,
+        "prob_ever_soft_burnout": prob_ever_soft_burnout,
+        "final_month_hard_burnout_prob": final_month_hard_burnout_prob,
     }
-
 
 # ----------------------------------------------------------------------
 #  Wrapper – loads data once, runs all stochastic scenarios
@@ -183,8 +196,10 @@ def run_all_scenarios_monte_carlo(
             "soft_burnout_prob": final["soft_burnout_prob"],
             "hard_burnout_prob": final["hard_burnout_prob"],
             "ara_adequate_prob": final["ara_adequate_prob"],
+            "prob_ever_hard_burnout": res["prob_ever_hard_burnout"],
+            "prob_ever_soft_burnout": res["prob_ever_soft_burnout"],
         })
-
+        
     if not summary:
         print("No scenarios with stochastic blocks found.")
         return pd.DataFrame()
