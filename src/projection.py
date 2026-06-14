@@ -142,7 +142,7 @@ class ReserveStressTest:
         else:
             old_intensity = self.scenario.get("intervention", {}).get("intensity", 0.0)
             intervention = old_intensity
-
+            
         # 5. Reserve change (BoP identity)
         reserve_change = (current_account + financial_account + net_debt_flow
                           - debt_service - intervention)
